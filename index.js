@@ -4,10 +4,15 @@ import 'dotenv/config';
 
 import express from 'express';
 import cors from 'cors';
+import { connectDB } from './DB/connect.js';
 
+import pokemonRoutes from './routes/pokemon.js';
+import authRoutes from './routes/auth.js';
 
-
+await connectDB();
 const app = express();
+
+
 
 app.use(cors()); // Permet les requêtes cross-origin (ex: frontend sur un autre port)
 
@@ -19,6 +24,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
+
+app.use('/api', authRoutes);
+app.use('/api', pokemonRoutes);
 
 
 
